@@ -1,0 +1,15 @@
+APP_ENV=development
+# Match the exact browser origin printed by dev:workers.
+APP_ORIGIN=http://localhost:5173
+# Configure HYPERDRIVE in wrangler.jsonc when an account binding is provisioned.
+# Keep its local connection URL in the shell environment, not this template.
+
+# Use a generated 32-byte base64 key; keep old versions available for decryption.
+# FLOWROUTE_ENCRYPTION_KEY_VERSION=v1
+# FLOWROUTE_ENCRYPTION_KEYS={"v1":"REPLACE_WITH_BASE64_KEY"}
+
+# Phase 5 is test-mode only; production activation remains blocked.
+STRIPE_TEST_ENABLED=false
+# STRIPE_SECRET_KEY=sk_test_REPLACE_WITH_SANDBOX_KEY
+# STRIPE_WEBHOOK_SECRET=whsec_REPLACE_WITH_SIGNING_SECRET
+# STRIPE_ACCOUNT_ID=acct_REPLACE_WITH_SANDBOX_ACCOUNT_ID

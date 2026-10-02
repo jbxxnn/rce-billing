@@ -1,0 +1,4 @@
+ALTER TABLE "stripe_invoice_history" ADD COLUMN "billing_period_start" date;--> statement-breakpoint
+ALTER TABLE "stripe_invoice_history" ADD COLUMN "billing_period_end" date;--> statement-breakpoint
+CREATE INDEX "stripe_invoice_history_customer_period_idx" ON "stripe_invoice_history" USING btree ("customer_id","billing_period_start","billing_period_end");--> statement-breakpoint
+ALTER TABLE "stripe_invoice_history" ADD CONSTRAINT "stripe_invoice_history_period_check" CHECK (("stripe_invoice_history"."billing_period_start" IS NULL AND "stripe_invoice_history"."billing_period_end" IS NULL) OR ("stripe_invoice_history"."billing_period_start" IS NOT NULL AND "stripe_invoice_history"."billing_period_end" IS NOT NULL AND "stripe_invoice_history"."billing_period_start" < "stripe_invoice_history"."billing_period_end"));

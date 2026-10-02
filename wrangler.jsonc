@@ -1,0 +1,145 @@
+{
+  "account_id": "cb88972087749987148bb1703784654f",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rce-billing",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-09-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+  },
+  "triggers": {
+    "crons": ["5 * * * *"],
+  },
+  "queues": {
+    "producers": [
+      {
+        "binding": "FLOWROUTE_JOBS",
+        "queue": "rce-billing-flowroute-jobs",
+      },
+      {
+        "binding": "STRIPE_BILLING_JOBS",
+        "queue": "rce-billing-stripe-billing-jobs",
+      },
+    ],
+    "consumers": [
+      {
+        "queue": "rce-billing-flowroute-jobs",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 8,
+        "retry_delay": 60,
+        "dead_letter_queue": "rce-billing-flowroute-jobs-dead-letter",
+      },
+      {
+        "queue": "rce-billing-stripe-billing-jobs",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 8,
+        "retry_delay": 60,
+        "dead_letter_queue": "rce-billing-stripe-billing-jobs-dead-letter",
+      },
+    ],
+  },
+  "env": {
+    "production": {
+      "name": "rce-billing-production",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [
+        {
+          "pattern": "billing.re-circuit.com",
+          "custom_domain": true,
+        },
+      ],
+      "vars": {
+        "APP_ENV": "production",
+        "APP_ORIGIN": "https://billing.re-circuit.com",
+        "STRIPE_LIVE_ENABLED": "true",
+      },
+      "hyperdrive": [
+        {
+          "binding": "HYPERDRIVE",
+          "id": "73d7a16fed5448eebe838bba02f5bb19",
+        },
+      ],
+      "queues": {
+        "producers": [
+          {
+            "binding": "FLOWROUTE_JOBS",
+            "queue": "rce-billing-production-flowroute-jobs",
+          },
+          {
+            "binding": "STRIPE_BILLING_JOBS",
+            "queue": "rce-billing-production-stripe-billing-jobs",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "rce-billing-production-flowroute-jobs",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+            "max_retries": 8,
+            "retry_delay": 60,
+            "dead_letter_queue": "rce-billing-production-flowroute-jobs-dead-letter",
+          },
+          {
+            "queue": "rce-billing-production-stripe-billing-jobs",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+            "max_retries": 8,
+            "retry_delay": 60,
+            "dead_letter_queue": "rce-billing-production-stripe-billing-jobs-dead-letter",
+          },
+        ],
+      },
+    },
+    "staging": {
+      "name": "rce-billing-staging",
+      "workers_dev": true,
+      "preview_urls": false,
+      "vars": {
+        "APP_ENV": "staging",
+        "APP_ORIGIN": "https://rce-billing-staging.sales-cb8.workers.dev",
+      },
+      "hyperdrive": [
+        {
+          "binding": "HYPERDRIVE",
+          "id": "80896803c6bc4608b52a1679b485561c",
+        },
+      ],
+      "queues": {
+        "producers": [
+          {
+            "binding": "FLOWROUTE_JOBS",
+            "queue": "rce-billing-flowroute-jobs",
+          },
+          {
+            "binding": "STRIPE_BILLING_JOBS",
+            "queue": "rce-billing-stripe-billing-jobs",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "rce-billing-flowroute-jobs",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+            "max_retries": 8,
+            "retry_delay": 60,
+            "dead_letter_queue": "rce-billing-flowroute-jobs-dead-letter",
+          },
+          {
+            "queue": "rce-billing-stripe-billing-jobs",
+            "max_batch_size": 10,
+            "max_batch_timeout": 5,
+            "max_retries": 8,
+            "retry_delay": 60,
+            "dead_letter_queue": "rce-billing-stripe-billing-jobs-dead-letter",
+          },
+        ],
+      },
+    },
+  },
+}

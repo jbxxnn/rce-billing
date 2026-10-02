@@ -1,0 +1,167 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790077813183,
+      "tag": "0000_core_billing_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790077829883,
+      "tag": "0001_history_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790079780553,
+      "tag": "0002_administrator_sessions",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790079853948,
+      "tag": "0003_revoke_changed_identities",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790081520693,
+      "tag": "0004_customer_management",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790081647648,
+      "tag": "0005_customer_revision_and_ciphertext",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790082091414,
+      "tag": "0006_archived_customer_activity",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790086800865,
+      "tag": "0007_plan_subscription_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790086853819,
+      "tag": "0008_plan_version_and_draft_identity",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790087005494,
+      "tag": "0009_plan_subscription_revision_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1790088305315,
+      "tag": "0010_stripe_test_workflows",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1790089165760,
+      "tag": "0011_stripe_operation_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1790130154136,
+      "tag": "0012_flowroute_export_claims",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1790130244798,
+      "tag": "0013_flowroute_export_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1790132506140,
+      "tag": "0014_last_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1790135000000,
+      "tag": "0015_billing_run_pricing",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1790136000000,
+      "tag": "0016_billing_sync_jobs",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1790137000000,
+      "tag": "0017_billing_sync_claims",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1790138000000,
+      "tag": "0018_stripe_subscription_schedules",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1790630000000,
+      "tag": "0019_mcp_oauth",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1790640000000,
+      "tag": "0020_stripe_invoice_history",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1790650000000,
+      "tag": "0021_flowroute_usage_backfills",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1790660000000,
+      "tag": "0022_invoice_history_billing_period",
+      "breakpoints": true
+    }
+  ]
+}
