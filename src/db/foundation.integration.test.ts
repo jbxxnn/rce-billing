@@ -123,7 +123,7 @@ describe("PostgreSQL foundation", () => {
     const result = await client.query(
       "SELECT count(*)::int AS count FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'",
     );
-    expect(result.rows[0].count).toBe(21);
+    expect(result.rows[0].count).toBe(25);
   });
   it("seeds synthetic fixtures idempotently without active billing or provider credentials", async () => {
     await seedDevelopment(source.connectionString);
