@@ -527,7 +527,7 @@ describe.each(["next", "workers"] as const)(
         expect(subscription.status).toBe(200);
         const html = await subscription.text();
         expect(html).toContain("1234");
-        expect(html).toContain("Proposed anchor");
+        expect(html).toContain("Proposed first renewal");
         const next = await fixture.query(
           "SELECT id FROM plan_price_versions WHERE plan_id=$1 AND active_until IS NULL",
           [planId],
