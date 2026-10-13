@@ -3,16 +3,12 @@ import { ChangeStripePlan } from "../stripe/forms";
 import { withPlans } from "./server";
 import { DraftForm } from "./forms";
 export async function PricePicker({
-  query,
   customerId,
-  path,
   draft,
   live = false,
 }: {
   live?: boolean;
-  query: Record<string, string | undefined>;
   customerId: string;
-  path: string;
   draft?: {
     id: string;
     revision: number;

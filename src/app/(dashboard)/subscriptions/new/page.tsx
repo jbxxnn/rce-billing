@@ -29,7 +29,7 @@ export default async function Page({
           {customer.status === "ARCHIVED" ? (
             <p className="mt-5 text-sm text-destructive">Restore this customer before creating a subscription.</p>
           ) : (
-            <PricePicker query={query} customerId={parsed.data} path="/subscriptions/new" />
+            <PricePicker customerId={parsed.data} />
           )}
         </section>
         <aside className="flex flex-col border-t bg-muted/40 p-6 md:p-8 lg:border-t-0 lg:border-l">

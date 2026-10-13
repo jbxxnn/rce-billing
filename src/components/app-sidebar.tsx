@@ -13,7 +13,6 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
-import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
@@ -38,11 +37,6 @@ const navigation = [
     url: "/reconciliation",
     icon: IconFileDescription,
   },
-];
-
-const records = [
-  { name: "Customer directory", url: "/customers", icon: IconUsers },
-  { name: "Plan catalogue", url: "/plans", icon: IconFileDescription },
 ];
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {

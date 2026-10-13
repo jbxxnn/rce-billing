@@ -351,11 +351,13 @@ export function createRceBillingMcpServer(
         idempotentHint: false,
       },
     },
-    async ({ confirmation: _confirmation, ...input }) => {
+    async (input) => {
+      const { confirmation, ...customerInput } = input;
+      void confirmation;
       try {
         const customer = await read((db) =>
           customerManagementRepository(db).create(
-            profileSchema.parse(input),
+            profileSchema.parse(customerInput),
             writeActor(),
           ),
         );
@@ -389,13 +391,9 @@ export function createRceBillingMcpServer(
         idempotentHint: true,
       },
     },
-    async ({
-      confirmation: _confirmation,
-      requestId,
-      customerId,
-      planPriceVersionId,
-      collectionMethod,
-    }) => {
+    async (input) => {
+      const { confirmation, requestId, customerId, planPriceVersionId, collectionMethod } = input;
+      void confirmation;
       try {
         const subscription = await read((db) =>
           planManagementRepository(db).createDraft(

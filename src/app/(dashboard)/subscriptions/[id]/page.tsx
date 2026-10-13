@@ -172,9 +172,7 @@ export default async function Page({
                   prorated charges or credits.
                 </p>
                 <PricePicker
-                  query={query}
                   customerId={data.customerId}
-                  path={`/subscriptions/${id}`}
                   draft={data}
                   live
                 />
@@ -198,9 +196,7 @@ export default async function Page({
           <section className="rounded-lg border border-input bg-card p-6"><h2 className="text-lg font-semibold">Edit subscription draft</h2>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">You can change the plan or collection method until activation in Stripe.</p>
             <PricePicker
-              query={query}
               customerId={data.customerId}
-              path={`/subscriptions/${id}`}
               draft={data}
             />
           </section>
