@@ -23,14 +23,17 @@ export function SyncStripeHistory({ customerId }: { customerId?: string }) {
         body,
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error ?? "Unable to sync Stripe history");
+      if (!response.ok)
+        throw new Error(result.error ?? "Unable to sync Stripe history");
       setMessage(
         `${result.invoices} invoice${result.invoices === 1 ? "" : "s"} synced.`,
       );
       router.refresh();
     } catch (cause) {
       setMessage(
-        cause instanceof Error ? cause.message : "Unable to sync Stripe history",
+        cause instanceof Error
+          ? cause.message
+          : "Unable to sync Stripe history",
       );
     } finally {
       setPending(false);
@@ -41,7 +44,11 @@ export function SyncStripeHistory({ customerId }: { customerId?: string }) {
     <div className="flex flex-col items-end gap-2">
       <Button type="button" variant="outline" onClick={sync} disabled={pending}>
         <RefreshCw className={pending ? "animate-spin" : ""} />
-        {pending ? "Syncing Stripe…" : customerId ? "Sync Stripe history" : "Sync Stripe history"}
+        {pending
+          ? "Syncing Stripe…"
+          : customerId
+            ? "Sync Stripe history"
+            : "Sync Stripe history"}
       </Button>
       {message ? (
         <p role="status" className="text-xs text-muted-foreground">

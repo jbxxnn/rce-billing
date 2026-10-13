@@ -3,7 +3,7 @@ import { emitKeypressEvents } from "node:readline";
 import { manageAdministrator } from "./manage-admin";
 
 dotenv.config({ path: ".env.local" });
-  
+
 async function readPassword(prompt: string): Promise<string> {
   if (!process.stdin.isTTY) {
     let value = "";

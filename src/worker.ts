@@ -93,7 +93,11 @@ async function dispatchStripe(env: Environment, now = new Date()) {
 }
 
 const worker = {
-  async fetch(request: Request, env: Environment, ctx: unknown): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: Environment,
+    ctx: unknown,
+  ): Promise<Response> {
     const path = new URL(request.url).pathname;
     if (path === "/.well-known/oauth-protected-resource")
       return protectedResourceMetadata(env, request);

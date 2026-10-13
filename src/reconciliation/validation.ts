@@ -39,7 +39,9 @@ export const reconciliationSchema = z
   })
   .strict();
 
-export function reconciliationInput(value: z.output<typeof reconciliationSchema>) {
+export function reconciliationInput(
+  value: z.output<typeof reconciliationSchema>,
+) {
   return {
     planType: value.planType,
     flowrouteTotalCost: value.flowrouteTotalCost,

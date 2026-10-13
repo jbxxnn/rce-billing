@@ -2,8 +2,10 @@
 import { MutationForm, type PriceOption } from "../plans/forms";
 
 const labelClass = "text-sm font-medium text-foreground";
-const controlClass = "mt-2 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
-const confirmationClass = "mt-5 flex items-start gap-2 text-sm leading-6 text-foreground";
+const controlClass =
+  "mt-2 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
+const confirmationClass =
+  "mt-5 flex items-start gap-2 text-sm leading-6 text-foreground";
 function Identity({
   revision,
   requestKey,
@@ -59,7 +61,11 @@ export function ActivateStripe({
         proration behavior.
       </p>
       <label className={confirmationClass}>
-        <input className="mt-1 size-4 rounded border-input accent-primary" type="checkbox" required />
+        <input
+          className="mt-1 size-4 rounded border-input accent-primary"
+          type="checkbox"
+          required
+        />
         Create this {mode === "live" ? "live" : "test"} subscription in Stripe.
       </label>
     </MutationForm>
@@ -83,7 +89,9 @@ export function ChangeStripePlan({
       label="Apply prorated test plan change"
     >
       <Identity revision={revision} requestKey={requestKey} />
-      <label className={labelClass} htmlFor="stripePrice">New plan price</label>
+      <label className={labelClass} htmlFor="stripePrice">
+        New plan price
+      </label>
       <select
         id="stripePrice"
         name="planPriceVersionId"
@@ -101,7 +109,11 @@ export function ChangeStripePlan({
           ))}
       </select>
       <label className={confirmationClass}>
-        <input className="mt-1 size-4 rounded border-input accent-primary" type="checkbox" required />
+        <input
+          className="mt-1 size-4 rounded border-input accent-primary"
+          type="checkbox"
+          required
+        />
         Apply this plan now with Stripe proration.
       </label>
     </MutationForm>
@@ -123,9 +135,17 @@ export function ChangeToAutomaticCollection({
       label="Use automatic charging"
     >
       <Identity revision={revision} requestKey={requestKey} />
-      <input type="hidden" name="collectionMethod" value="charge_automatically" />
+      <input
+        type="hidden"
+        name="collectionMethod"
+        value="charge_automatically"
+      />
       <label className={confirmationClass}>
-        <input className="mt-1 size-4 rounded border-input accent-primary" type="checkbox" required />
+        <input
+          className="mt-1 size-4 rounded border-input accent-primary"
+          type="checkbox"
+          required
+        />
         Use the customer&apos;s saved Stripe payment method for future invoices.
       </label>
     </MutationForm>
@@ -148,7 +168,11 @@ export function CancelStripe({
     >
       <Identity revision={revision} requestKey={requestKey} />
       <label className={confirmationClass}>
-        <input className="mt-1 size-4 rounded border-input accent-primary" type="checkbox" required />
+        <input
+          className="mt-1 size-4 rounded border-input accent-primary"
+          type="checkbox"
+          required
+        />
         End the subscription at its current period end. Service remains active
         until then.
       </label>

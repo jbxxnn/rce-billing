@@ -27,7 +27,8 @@ try {
     name: "operational_attention",
     arguments: {},
   });
-  if (result.isError) throw new Error("The operational_attention tool returned an error.");
+  if (result.isError)
+    throw new Error("The operational_attention tool returned an error.");
   console.log("MCP read-only database smoke test passed.");
 } finally {
   await client.close();

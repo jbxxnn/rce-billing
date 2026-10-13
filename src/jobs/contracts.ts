@@ -23,7 +23,12 @@ export function parseQueueMessageBody(value: unknown): unknown {
     return jsonBody(new TextDecoder().decode(value));
   if (ArrayBuffer.isView(value))
     return jsonBody(
-      new TextDecoder().decode(value.buffer.slice(value.byteOffset, value.byteOffset + value.byteLength)),
+      new TextDecoder().decode(
+        value.buffer.slice(
+          value.byteOffset,
+          value.byteOffset + value.byteLength,
+        ),
+      ),
     );
   return value;
 }

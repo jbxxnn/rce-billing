@@ -25,7 +25,12 @@ export class TestStripe implements StripeProvider {
     const cached = this.keys.get(key);
     if (cached) return cached;
     const id =
-      kind === "change" || kind === "cancel" || kind === "hold" || kind === "release" || kind === "finalize" || kind === "send"
+      kind === "change" ||
+      kind === "cancel" ||
+      kind === "hold" ||
+      kind === "release" ||
+      kind === "finalize" ||
+      kind === "send"
         ? String(input.id)
         : `${{ customer: "cus", product: "prod", price: "price", subscription: "sub", invoice_item: "ii", schedule: "sub_sched" }[kind]}_${crypto.randomUUID().replaceAll("-", "")}`;
     this.writes.push({ kind, input: structuredClone(input), key });

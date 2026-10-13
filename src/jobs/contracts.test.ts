@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  parseFlowrouteJobMessage,
-  parseQueueMessageBody,
-} from "./contracts";
+import { parseFlowrouteJobMessage, parseQueueMessageBody } from "./contracts";
 
 describe("Flowroute queue messages", () => {
   it("parses JSON strings from Cloudflare's HTTP queue API", () => {

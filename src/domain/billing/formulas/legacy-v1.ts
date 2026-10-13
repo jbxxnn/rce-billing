@@ -69,7 +69,9 @@ export function calculateLegacyV1(
           amountMinor: usageAndSip,
           metadata: {
             flowrouteUsageQuantity: usage.toString(),
-            meteredSipChargeMinor: (input.meteredSipChargeMinor ?? 0n).toString(),
+            meteredSipChargeMinor: (
+              input.meteredSipChargeMinor ?? 0n
+            ).toString(),
           },
         },
         {
@@ -81,12 +83,17 @@ export function calculateLegacyV1(
       ];
       lines = otherLines.filter((line) => line.amountMinor !== 0n);
       if (!lines.length)
-        lines = [{
-          code: "LEGACY_V1_OTHER_USAGE",
-          description: "Flowroute usage and SIP trunk charge",
-          amountMinor: 0n,
-          metadata: { flowrouteUsageQuantity: usage.toString(), meteredSipChargeMinor: "0" },
-        }];
+        lines = [
+          {
+            code: "LEGACY_V1_OTHER_USAGE",
+            description: "Flowroute usage and SIP trunk charge",
+            amountMinor: 0n,
+            metadata: {
+              flowrouteUsageQuantity: usage.toString(),
+              meteredSipChargeMinor: "0",
+            },
+          },
+        ];
       break;
     }
     case "METERED":
@@ -97,37 +104,42 @@ export function calculateLegacyV1(
       amount =
         ((usage * 10_000n - input.productPriceMinor * 35n) * 4n) / 100n +
         numbersCharge;
-      lines = [{
-        code: "LEGACY_V1_METERED_USAGE",
-        description: "Metered SIP trunk usage and phone-number adjustment",
-        amountMinor: nonNegative(amount),
-        metadata: { phoneNumberAdjustmentMinor: numbersCharge.toString() },
-      }];
+      lines = [
+        {
+          code: "LEGACY_V1_METERED_USAGE",
+          description: "Metered SIP trunk usage and phone-number adjustment",
+          amountMinor: nonNegative(amount),
+          metadata: { phoneNumberAdjustmentMinor: numbersCharge.toString() },
+        },
+      ];
       break;
     case "UNMETERED": {
-      const channelQuantity = input.extraChannels ?? input.includedChannels ?? 0n;
-      amount =
-        channelQuantity * (input.channelCostMinor ?? 0n) +
-        numbersCharge;
-      lines = [{
-        code: "LEGACY_V1_UNMETERED_USAGE",
-        description: "Unmetered channel and phone-number adjustment",
-        amountMinor: nonNegative(amount),
-        metadata: {
-          channelQuantity: channelQuantity.toString(),
-          phoneNumberAdjustmentMinor: numbersCharge.toString(),
+      const channelQuantity =
+        input.extraChannels ?? input.includedChannels ?? 0n;
+      amount = channelQuantity * (input.channelCostMinor ?? 0n) + numbersCharge;
+      lines = [
+        {
+          code: "LEGACY_V1_UNMETERED_USAGE",
+          description: "Unmetered channel and phone-number adjustment",
+          amountMinor: nonNegative(amount),
+          metadata: {
+            channelQuantity: channelQuantity.toString(),
+            phoneNumberAdjustmentMinor: numbersCharge.toString(),
+          },
         },
-      }];
+      ];
       break;
     }
     case "FIXED":
       amount = input.productPriceMinor;
-      lines = [{
-        code: "LEGACY_V1_FIXED_CHARGE",
-        description: "Fixed monthly charge",
-        amountMinor: nonNegative(amount),
-        metadata: {},
-      }];
+      lines = [
+        {
+          code: "LEGACY_V1_FIXED_CHARGE",
+          description: "Fixed monthly charge",
+          amountMinor: nonNegative(amount),
+          metadata: {},
+        },
+      ];
   }
   return {
     version: "legacy-v1",

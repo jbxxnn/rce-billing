@@ -8,7 +8,8 @@ import type { CustomerProfile } from "./validation";
 
 const fieldClass = "space-y-2";
 const labelClass = "text-sm font-medium text-foreground";
-const inputClass = "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
+const inputClass =
+  "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
 const errorClass = "text-sm text-destructive";
 type SubmissionResult = { id: string; revision?: number };
 
@@ -70,7 +71,8 @@ export function CustomerForm({
 }: {
   customer?: CustomerProfile & { id: string; revision: number };
 }) {
-  const [createdCustomer, setCreatedCustomer] = useState<SubmissionResult | null>(null);
+  const [createdCustomer, setCreatedCustomer] =
+    useState<SubmissionResult | null>(null);
   const state = useSubmission(
     customer ? `/api/customers/${customer.id}/update` : "/api/customers",
     false,
@@ -84,7 +86,9 @@ export function CustomerForm({
     maxLength = 160,
   ) => (
     <div className={fieldClass}>
-      <label className={labelClass} htmlFor={name}>{label}</label>
+      <label className={labelClass} htmlFor={name}>
+        {label}
+      </label>
       <input
         id={name}
         name={name}
@@ -115,7 +119,12 @@ export function CustomerForm({
     </div>
   );
   if (createdCustomer) {
-    return <CustomerSetup customerId={createdCustomer.id} revision={createdCustomer.revision ?? 1} />;
+    return (
+      <CustomerSetup
+        customerId={createdCustomer.id}
+        revision={createdCustomer.revision ?? 1}
+      />
+    );
   }
 
   return (
@@ -125,8 +134,12 @@ export function CustomerForm({
       )}
       <section className="rounded-lg border border-input p-5">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Customer details</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">The name and email used for billing records and Stripe.</p>
+          <h2 className="text-base font-semibold text-foreground">
+            Customer details
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            The name and email used for billing records and Stripe.
+          </p>
         </div>
         <div className="mt-5 grid gap-x-5 gap-y-5 md:grid-cols-2">
           {input("fullName", "Full name", "text", true)}
@@ -138,8 +151,12 @@ export function CustomerForm({
 
       <section className="rounded-lg border border-input p-5">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Billing address</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">Optional now. Add it when it is needed for invoices.</p>
+          <h2 className="text-base font-semibold text-foreground">
+            Billing address
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Optional now. Add it when it is needed for invoices.
+          </p>
         </div>
         <div className="mt-5 grid gap-x-5 gap-y-5 md:grid-cols-2">
           {input("streetAddress", "Street address", "text", false, 250)}
@@ -151,8 +168,12 @@ export function CustomerForm({
 
       <section className="rounded-lg border border-input p-5">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Billing schedule</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">Usage is always collected for the previous full calendar month.</p>
+          <h2 className="text-base font-semibold text-foreground">
+            Billing schedule
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Usage is always collected for the previous full calendar month.
+          </p>
         </div>
         <div className="mt-5 grid gap-x-5 gap-y-5 md:grid-cols-2">
           {input("billingDay", "Monthly billing day", "number", true)}
@@ -160,12 +181,26 @@ export function CustomerForm({
         </div>
       </section>
       {state.error && (
-        <p role="alert" className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+        <p
+          role="alert"
+          className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+        >
           {state.error}
         </p>
       )}
       <div className="flex flex-col-reverse gap-3 border-t border-input pt-6 sm:flex-row sm:items-center sm:justify-between">
-        {customer ? <span className="text-sm text-muted-foreground">Changes apply to this customer record only.</span> : <Link className="text-sm font-medium text-muted-foreground hover:text-foreground" href="/customers">Cancel</Link>}
+        {customer ? (
+          <span className="text-sm text-muted-foreground">
+            Changes apply to this customer record only.
+          </span>
+        ) : (
+          <Link
+            className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            href="/customers"
+          >
+            Cancel
+          </Link>
+        )}
         <Button disabled={state.pending}>
           {state.pending
             ? "Saving…"
@@ -188,37 +223,45 @@ export function CredentialsForm({
   hasStoredCredentials?: boolean;
   onSaved?: () => void;
 }) {
-  const state = useSubmission(`/api/customers/${id}/credentials`, true, onSaved);
+  const state = useSubmission(
+    `/api/customers/${id}/credentials`,
+    true,
+    onSaved,
+  );
   return (
     <form onSubmit={state.submit} autoComplete="off">
       <input type="hidden" name="revision" value={revision} />
       <div className="grid gap-x-5 gap-y-5 md:grid-cols-2">
-      <div>
-      <label className={labelClass} htmlFor="accessKey">New Flowroute access key</label>
-      <input
-        id="accessKey"
-        name="accessKey"
-        type="password"
-        autoComplete="new-password"
-        maxLength={512}
-        required
-        className={inputClass}
-        placeholder={hasStoredCredentials ? "************" : undefined}
-      />
-      </div>
-      <div>
-      <label className={labelClass} htmlFor="secretKey">New Flowroute secret key</label>
-      <input
-        id="secretKey"
-        name="secretKey"
-        type="password"
-        autoComplete="new-password"
-        maxLength={2048}
-        required
-        className={inputClass}
-        placeholder={hasStoredCredentials ? "************" : undefined}
-      />
-      </div>
+        <div>
+          <label className={labelClass} htmlFor="accessKey">
+            New Flowroute access key
+          </label>
+          <input
+            id="accessKey"
+            name="accessKey"
+            type="password"
+            autoComplete="new-password"
+            maxLength={512}
+            required
+            className={inputClass}
+            placeholder={hasStoredCredentials ? "************" : undefined}
+          />
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="secretKey">
+            New Flowroute secret key
+          </label>
+          <input
+            id="secretKey"
+            name="secretKey"
+            type="password"
+            autoComplete="new-password"
+            maxLength={2048}
+            required
+            className={inputClass}
+            placeholder={hasStoredCredentials ? "************" : undefined}
+          />
+        </div>
       </div>
       <p className="mt-5 text-sm leading-6 text-muted-foreground">
         Both keys are replaced together. Existing keys cannot be displayed.
@@ -259,25 +302,42 @@ export function BillingAdjustmentsForm({
   const state = useSubmission(`/api/customers/${id}/billing-adjustments`);
   const effectiveFrom = new Date().toISOString().slice(0, 10);
   const field = (
-    name: "meteredSipTrunkUsage" | "cloudServerHosting" | "extraNumbers" | "extraChannels",
+    name:
+      | "meteredSipTrunkUsage"
+      | "cloudServerHosting"
+      | "extraNumbers"
+      | "extraChannels",
     label: string,
     hint: string,
   ) => (
     <div className={fieldClass}>
-      <label className={labelClass} htmlFor={name}>{label}</label>
+      <label className={labelClass} htmlFor={name}>
+        {label}
+      </label>
       <input
         id={name}
         name={name}
         type="number"
         min="0"
-        step={name === "extraNumbers" || name === "extraChannels" ? "1" : "0.01"}
+        step={
+          name === "extraNumbers" || name === "extraChannels" ? "1" : "0.01"
+        }
         defaultValue={values[name]}
         className={inputClass}
         aria-invalid={Boolean(state.errors[name])}
         aria-describedby={`${name}-hint${state.errors[name] ? ` ${name}-error` : ""}`}
       />
-      <p id={`${name}-hint`} className="text-xs leading-5 text-muted-foreground">{hint}</p>
-      {state.errors[name] && <p id={`${name}-error`} className={errorClass}>{state.errors[name].join(". ")}</p>}
+      <p
+        id={`${name}-hint`}
+        className="text-xs leading-5 text-muted-foreground"
+      >
+        {hint}
+      </p>
+      {state.errors[name] && (
+        <p id={`${name}-error`} className={errorClass}>
+          {state.errors[name].join(". ")}
+        </p>
+      )}
     </div>
   );
   return (
@@ -285,20 +345,56 @@ export function BillingAdjustmentsForm({
       <input type="hidden" name="revision" value={revision} />
       <div className="grid gap-5 md:grid-cols-2">
         <div className={fieldClass}>
-          <label className={labelClass} htmlFor="effectiveFrom">Apply from</label>
-          <input id="effectiveFrom" name="effectiveFrom" type="date" defaultValue={effectiveFrom} required className={inputClass} />
-          <p className="text-xs leading-5 text-muted-foreground">Changes apply to billing periods beginning on or after this date.</p>
+          <label className={labelClass} htmlFor="effectiveFrom">
+            Apply from
+          </label>
+          <input
+            id="effectiveFrom"
+            name="effectiveFrom"
+            type="date"
+            defaultValue={effectiveFrom}
+            required
+            className={inputClass}
+          />
+          <p className="text-xs leading-5 text-muted-foreground">
+            Changes apply to billing periods beginning on or after this date.
+          </p>
         </div>
-        {field("extraNumbers", "Extra phone numbers", "A monthly quantity above the plan’s included phone numbers.")}
-        {field("extraChannels", "Extra channels", "The customer’s monthly unmetered channel quantity. Leave blank to use the plan’s legacy channel quantity.")}
+        {field(
+          "extraNumbers",
+          "Extra phone numbers",
+          "A monthly quantity above the plan’s included phone numbers.",
+        )}
+        {field(
+          "extraChannels",
+          "Extra channels",
+          "The customer’s monthly unmetered channel quantity. Leave blank to use the plan’s legacy channel quantity.",
+        )}
         <div className="md:col-span-2 grid gap-5 md:grid-cols-2">
-          {field("meteredSipTrunkUsage", "Metered SIP trunk usage (USD)", "Used only with an Other/custom plan. It is added to that plan’s monthly Flowroute charge; the plan type named Metered uses a different formula.")}
-          {field("cloudServerHosting", "Cloud server hosting (USD)", "Used only with an Other/custom plan and added as a separate recurring hosting charge.")}
+          {field(
+            "meteredSipTrunkUsage",
+            "Metered SIP trunk usage (USD)",
+            "Used only with an Other/custom plan. It is added to that plan’s monthly Flowroute charge; the plan type named Metered uses a different formula.",
+          )}
+          {field(
+            "cloudServerHosting",
+            "Cloud server hosting (USD)",
+            "Used only with an Other/custom plan and added as a separate recurring hosting charge.",
+          )}
         </div>
       </div>
-      <p className="mt-5 text-sm leading-6 text-muted-foreground">Saving replaces the customer’s current recurring adjustments and preserves the previous adjustment history.</p>
-      {state.error && <p role="alert" className={`mt-4 ${errorClass}`}>{state.error}</p>}
-      <Button className="mt-5" disabled={state.pending}>{state.pending ? "Saving…" : "Save billing adjustments"}</Button>
+      <p className="mt-5 text-sm leading-6 text-muted-foreground">
+        Saving replaces the customer’s current recurring adjustments and
+        preserves the previous adjustment history.
+      </p>
+      {state.error && (
+        <p role="alert" className={`mt-4 ${errorClass}`}>
+          {state.error}
+        </p>
+      )}
+      <Button className="mt-5" disabled={state.pending}>
+        {state.pending ? "Saving…" : "Save billing adjustments"}
+      </Button>
     </form>
   );
 }
@@ -318,20 +414,42 @@ function CustomerSetup({
       <div className="mt-8 space-y-6">
         <div className="rounded-lg border border-primary/20 bg-primary/10 p-5">
           <div className="flex gap-3">
-            <CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+            <CircleCheck
+              className="mt-0.5 size-5 shrink-0 text-primary"
+              aria-hidden="true"
+            />
             <div>
-              <h2 className="font-semibold text-foreground">Flowroute credentials saved</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">They are encrypted and ready for usage exports when the integration runs.</p>
+              <h2 className="font-semibold text-foreground">
+                Flowroute credentials saved
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                They are encrypted and ready for usage exports when the
+                integration runs.
+              </p>
             </div>
           </div>
         </div>
         <div className="rounded-lg border border-input p-5">
-          <h2 className="text-base font-semibold text-foreground">Next: choose a plan</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">Create a subscription draft, review it, then activate it in Stripe when you are ready.</p>
+          <h2 className="text-base font-semibold text-foreground">
+            Next: choose a plan
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Create a subscription draft, review it, then activate it in Stripe
+            when you are ready.
+          </p>
           <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <Link className="text-sm font-medium text-muted-foreground hover:text-foreground" href={`/customers/${customerId}`}>View customer overview</Link>
-            <Link className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90" href={subscriptionUrl}>
-              Create subscription draft <ArrowRight className="size-4" aria-hidden="true" />
+            <Link
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              href={`/customers/${customerId}`}
+            >
+              View customer overview
+            </Link>
+            <Link
+              className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              href={subscriptionUrl}
+            >
+              Create subscription draft{" "}
+              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -343,25 +461,51 @@ function CustomerSetup({
     <div className="mt-8 space-y-6">
       <div className="rounded-lg border border-primary/20 bg-primary/10 p-5">
         <div className="flex gap-3">
-          <CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+          <CircleCheck
+            className="mt-0.5 size-5 shrink-0 text-primary"
+            aria-hidden="true"
+          />
           <div>
-            <h2 className="font-semibold text-foreground">Customer profile created</h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">Add the Flowroute credentials now so this customer is ready for usage-based billing.</p>
+            <h2 className="font-semibold text-foreground">
+              Customer profile created
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Add the Flowroute credentials now so this customer is ready for
+              usage-based billing.
+            </p>
           </div>
         </div>
       </div>
       <section className="rounded-lg border border-input p-5">
         <div className="flex items-start gap-3">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"><KeyRound className="size-4" aria-hidden="true" /></span>
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <KeyRound className="size-4" aria-hidden="true" />
+          </span>
           <div>
-            <h2 className="text-base font-semibold text-foreground">Add Flowroute credentials</h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">Both keys are encrypted before they are saved. You can replace them later from the customer page.</p>
+            <h2 className="text-base font-semibold text-foreground">
+              Add Flowroute credentials
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Both keys are encrypted before they are saved. You can replace
+              them later from the customer page.
+            </p>
           </div>
         </div>
-        <div className="mt-6"><CredentialsForm id={customerId} revision={revision} onSaved={() => setCredentialsSaved(true)} /></div>
+        <div className="mt-6">
+          <CredentialsForm
+            id={customerId}
+            revision={revision}
+            onSaved={() => setCredentialsSaved(true)}
+          />
+        </div>
       </section>
       <div className="flex justify-end">
-        <Link className="text-sm font-medium text-muted-foreground hover:text-foreground" href={subscriptionUrl}>Skip credentials for now</Link>
+        <Link
+          className="text-sm font-medium text-muted-foreground hover:text-foreground"
+          href={subscriptionUrl}
+        >
+          Skip credentials for now
+        </Link>
       </div>
     </div>
   );

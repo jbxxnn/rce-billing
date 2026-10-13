@@ -88,7 +88,12 @@ function adjustmentValues(
       extraChannels = (extraChannels ?? 0n) + BigInt(adjustment.quantity);
     }
   }
-  return { meteredSipChargeMinor, hostingChargeMinor, extraNumbers, extraChannels };
+  return {
+    meteredSipChargeMinor,
+    hostingChargeMinor,
+    extraNumbers,
+    extraChannels,
+  };
 }
 
 /**

@@ -20,7 +20,10 @@ export default async function DashboardLayout({
         } as React.CSSProperties
       }
     >
-      <AppSidebar user={{ name: admin.email, email: admin.email }} variant="inset" />
+      <AppSidebar
+        user={{ name: admin.email, email: admin.email }}
+        variant="inset"
+      />
       <SidebarInset>
         {/* <SiteHeader /> */}
         {children}

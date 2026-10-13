@@ -8,11 +8,11 @@ Reviewed on 2026-09-24 using the live legacy administrative interface and the ar
 
 An administrator enters a plan name, monthly price, description, and one of three plan types.
 
-| Plan type | Plan fields shown in the live interface | Fields used by the archived billing code |
-| --- | --- | --- |
-| Metered | Included minutes, additional minutes, included numbers, extra-number cost | Plan price, included numbers, extra-number cost |
+| Plan type | Plan fields shown in the live interface                                    | Fields used by the archived billing code                                   |
+| --------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Metered   | Included minutes, additional minutes, included numbers, extra-number cost  | Plan price, included numbers, extra-number cost                            |
 | Unmetered | Included channels, extra-channel cost, included numbers, extra-number cost | Included channels, extra-channel cost, included numbers, extra-number cost |
-| Others | Basic plan details | Plan price; customer-specific SIP and hosting charges |
+| Others    | Basic plan details                                                         | Plan price; customer-specific SIP and hosting charges                      |
 
 The archive creates a Stripe product and recurring price, then stores the legacy plan in `price_plans`. It stores the Stripe product/price IDs and the plan attributes together.
 
@@ -24,11 +24,11 @@ The customer form records contact and address details, Flowroute access and secr
 
 Additional fields depend on the customer type:
 
-| Customer type | Customer-specific fields |
-| --- | --- |
-| Metered | Extra numbers |
-| Unmetered | Extra channels and extra numbers |
-| Others | Metered billing plan, metered SIP trunk usage, cloud-server-hosting charge |
+| Customer type | Customer-specific fields                                                   |
+| ------------- | -------------------------------------------------------------------------- |
+| Metered       | Extra numbers                                                              |
+| Unmetered     | Extra channels and extra numbers                                           |
+| Others        | Metered billing plan, metered SIP trunk usage, cloud-server-hosting charge |
 
 Saving the customer creates the customer record. It does **not** safely present a subscription confirmation step.
 

@@ -14,9 +14,8 @@ if (!productionDatabaseUrl) {
 
 process.env.RCE_BILLING_MCP_DATABASE_URL ??= productionDatabaseUrl;
 
-const { StdioServerTransport } = await import(
-  "@modelcontextprotocol/sdk/server/stdio.js"
-);
+const { StdioServerTransport } =
+  await import("@modelcontextprotocol/sdk/server/stdio.js");
 const { createRceBillingMcpServer } = await import("../../src/mcp/server");
 
 const server = createRceBillingMcpServer();

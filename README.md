@@ -50,5 +50,7 @@ PostgreSQL is the workflow system of record, accessed through Drizzle repositori
 The Workers build uses vinext and the Cloudflare Vite plugin. Public Workers URLs are disabled in `wrangler.jsonc`. No deployment runs in CI. Before staging deployment, configure the target account/environment and access policy, then validate the deployment against that environment. Administrator authentication is implemented. Production provider bindings and real billing remain future phases.
 
 See [the architecture decision](docs/adr/0001-application-foundation.md) and [migration progress](docs/MIGRATION_PROGRESS.md).
+
 # rce-billing
+
 # rce-billing

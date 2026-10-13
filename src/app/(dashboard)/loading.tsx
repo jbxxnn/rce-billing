@@ -9,5 +9,5 @@ export default function DashboardLoading() {
       </div>
       <div className="h-72 animate-pulse rounded-lg bg-muted" />
     </div>
-  )
+  );
 }

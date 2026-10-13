@@ -21,8 +21,14 @@ describe("legacy-v1 billing formulas", () => {
         hostingChargeMinor: 30n,
       }).lines,
     ).toEqual([
-      expect.objectContaining({ code: "LEGACY_V1_OTHER_USAGE", amountMinor: 320n }),
-      expect.objectContaining({ code: "LEGACY_V1_CLOUD_HOSTING", amountMinor: 30n }),
+      expect.objectContaining({
+        code: "LEGACY_V1_OTHER_USAGE",
+        amountMinor: 320n,
+      }),
+      expect.objectContaining({
+        code: "LEGACY_V1_CLOUD_HOSTING",
+        amountMinor: 30n,
+      }),
     ]);
   });
   it("uses the saved SIP charge for each custom-plan billing run", () => {

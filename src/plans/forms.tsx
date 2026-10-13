@@ -6,7 +6,8 @@ import type { PlanInput } from "./validation";
 
 const fieldClass = "space-y-2";
 const labelClass = "text-sm font-medium text-foreground";
-const inputClass = "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
+const inputClass =
+  "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50";
 const selectClass = `${inputClass} pr-8`;
 export function MutationForm({
   endpoint,
@@ -74,7 +75,9 @@ export function MutationForm({
           {error}
         </p>
       )}
-      <Button className="mt-5" disabled={pending}>{pending ? "Saving…" : label}</Button>
+      <Button className="mt-5" disabled={pending}>
+        {pending ? "Saving…" : label}
+      </Button>
     </form>
   );
 }
@@ -92,7 +95,9 @@ export function PlanForm({
     options: { type?: string; required?: boolean } = {},
   ) => (
     <div className={fieldClass}>
-      <label className={labelClass} htmlFor={name}>{label}</label>
+      <label className={labelClass} htmlFor={name}>
+        {label}
+      </label>
       <input
         id={name}
         name={name}
@@ -127,12 +132,16 @@ export function PlanForm({
           {field("description", "Description")}
         </div>
         <div className={fieldClass}>
-          <label className={labelClass} htmlFor="planType">Plan type</label>
+          <label className={labelClass} htmlFor="planType">
+            Plan type
+          </label>
           <select
             id="planType"
             name="planType"
             value={planType}
-            onChange={(event) => setPlanType(event.target.value as PlanInput["planType"])}
+            onChange={(event) =>
+              setPlanType(event.target.value as PlanInput["planType"])
+            }
             className={selectClass}
           >
             {[
@@ -141,42 +150,83 @@ export function PlanForm({
               ["UNMETERED", "Unmetered"],
               ["OTHER", "Other / custom"],
             ].map(([type, label]) => (
-              <option key={type} value={type}>{label}</option>
+              <option key={type} value={type}>
+                {label}
+              </option>
             ))}
           </select>
         </div>
       </div>
       {planType === "METERED" && (
         <section className="mt-6 rounded-lg border border-input bg-muted/30 p-5">
-          <h2 className="text-lg font-semibold tracking-tight">Metered plan settings</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">Configure included minutes and additional phone-number pricing.</p>
+          <h2 className="text-lg font-semibold tracking-tight">
+            Metered plan settings
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Configure included minutes and additional phone-number pricing.
+          </p>
           <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {field("includedMinutes", "Included minutes", { type: "number", required: true })}
-            {field("additionalMinuteAmount", "Additional minute amount (USD)", { type: "number", required: true })}
-            {field("includedNumbers", "Included phone numbers", { type: "number", required: true })}
-            {field("numberAmount", "Additional phone amount (USD)", { type: "number", required: true })}
+            {field("includedMinutes", "Included minutes", {
+              type: "number",
+              required: true,
+            })}
+            {field("additionalMinuteAmount", "Additional minute amount (USD)", {
+              type: "number",
+              required: true,
+            })}
+            {field("includedNumbers", "Included phone numbers", {
+              type: "number",
+              required: true,
+            })}
+            {field("numberAmount", "Additional phone amount (USD)", {
+              type: "number",
+              required: true,
+            })}
           </div>
         </section>
       )}
       {planType === "UNMETERED" && (
         <section className="mt-6 rounded-lg border border-input bg-muted/30 p-5">
-          <h2 className="text-lg font-semibold tracking-tight">Unmetered plan settings</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">Configure included channels and additional phone-number pricing.</p>
+          <h2 className="text-lg font-semibold tracking-tight">
+            Unmetered plan settings
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Configure included channels and additional phone-number pricing.
+          </p>
           <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {field("includedChannels", "Included channels", { type: "number", required: true })}
-            {field("channelAmount", "Additional channel amount (USD)", { type: "number", required: true })}
-            {field("includedNumbers", "Included phone numbers", { type: "number", required: true })}
-            {field("numberAmount", "Additional phone amount (USD)", { type: "number", required: true })}
+            {field("includedChannels", "Included channels", {
+              type: "number",
+              required: true,
+            })}
+            {field("channelAmount", "Additional channel amount (USD)", {
+              type: "number",
+              required: true,
+            })}
+            {field("includedNumbers", "Included phone numbers", {
+              type: "number",
+              required: true,
+            })}
+            {field("numberAmount", "Additional phone amount (USD)", {
+              type: "number",
+              required: true,
+            })}
           </div>
         </section>
       )}
       {(planType === "FIXED" || planType === "OTHER") && (
-        <p className="mt-5 text-sm leading-6 text-muted-foreground">This plan uses its monthly base amount. Customer-specific adjustments are added during billing when applicable.</p>
+        <p className="mt-5 text-sm leading-6 text-muted-foreground">
+          This plan uses its monthly base amount. Customer-specific adjustments
+          are added during billing when applicable.
+        </p>
       )}
       {planType !== "METERED" && hidden("includedMinutes")}
       {planType !== "METERED" && hidden("additionalMinuteAmount")}
-      {planType !== "METERED" && planType !== "UNMETERED" && hidden("includedNumbers")}
-      {planType !== "METERED" && planType !== "UNMETERED" && hidden("numberAmount")}
+      {planType !== "METERED" &&
+        planType !== "UNMETERED" &&
+        hidden("includedNumbers")}
+      {planType !== "METERED" &&
+        planType !== "UNMETERED" &&
+        hidden("numberAmount")}
       {planType !== "UNMETERED" && hidden("includedChannels")}
       {planType !== "UNMETERED" && hidden("channelAmount")}
       <p className="mt-5 text-sm leading-6 text-muted-foreground">
@@ -254,10 +304,20 @@ export function DraftForm({
       <div className="mt-6 space-y-5">
         <section className="rounded-lg border border-input p-5">
           <div>
-            <h2 className="text-base font-semibold text-foreground">Choose a plan</h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">A price version is saved with the draft, so future plan changes cannot alter this subscription.</p>
+            <h2 className="text-base font-semibold text-foreground">
+              Choose a plan
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              A price version is saved with the draft, so future plan changes
+              cannot alter this subscription.
+            </p>
           </div>
-          <label className={`${labelClass} mt-5 block`} htmlFor="planPriceVersionId">Available plan</label>
+          <label
+            className={`${labelClass} mt-5 block`}
+            htmlFor="planPriceVersionId"
+          >
+            Available plan
+          </label>
           <select
             id="planPriceVersionId"
             name="planPriceVersionId"
@@ -278,29 +338,65 @@ export function DraftForm({
                 </option>
               ))}
           </select>
-          {selectedPrice && <p className="mt-3 text-sm text-muted-foreground">Current selection: {selectedPrice.name} · version {selectedPrice.version}</p>}
+          {selectedPrice && (
+            <p className="mt-3 text-sm text-muted-foreground">
+              Current selection: {selectedPrice.name} · version{" "}
+              {selectedPrice.version}
+            </p>
+          )}
         </section>
 
         <section className="rounded-lg border border-input p-5">
           <div>
-            <h2 className="text-base font-semibold text-foreground">Choose how to collect payment</h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">This can be reviewed before anything is created in Stripe.</p>
+            <h2 className="text-base font-semibold text-foreground">
+              Choose how to collect payment
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              This can be reviewed before anything is created in Stripe.
+            </p>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <label className="cursor-pointer rounded-md border border-input p-4 transition-colors has-checked:border-primary has-checked:bg-primary/5">
-              <input className="sr-only" type="radio" name="collectionMethod" value="send_invoice" required defaultChecked={draft?.collectionMethod === "send_invoice"} />
-              <span className="block text-sm font-semibold text-foreground">Send an invoice</span>
-              <span className="mt-1 block text-sm leading-5 text-muted-foreground">Stripe emails an invoice and tracks payment by its due date.</span>
+              <input
+                className="sr-only"
+                type="radio"
+                name="collectionMethod"
+                value="send_invoice"
+                required
+                defaultChecked={draft?.collectionMethod === "send_invoice"}
+              />
+              <span className="block text-sm font-semibold text-foreground">
+                Send an invoice
+              </span>
+              <span className="mt-1 block text-sm leading-5 text-muted-foreground">
+                Stripe emails an invoice and tracks payment by its due date.
+              </span>
             </label>
             <label className="cursor-pointer rounded-md border border-input p-4 transition-colors has-checked:border-primary has-checked:bg-primary/5">
-              <input className="sr-only" type="radio" name="collectionMethod" value="charge_automatically" required defaultChecked={draft?.collectionMethod === "charge_automatically"} />
-              <span className="block text-sm font-semibold text-foreground">Charge automatically</span>
-              <span className="mt-1 block text-sm leading-5 text-muted-foreground">Stripe attempts payment automatically for each billing period.</span>
+              <input
+                className="sr-only"
+                type="radio"
+                name="collectionMethod"
+                value="charge_automatically"
+                required
+                defaultChecked={
+                  draft?.collectionMethod === "charge_automatically"
+                }
+              />
+              <span className="block text-sm font-semibold text-foreground">
+                Charge automatically
+              </span>
+              <span className="mt-1 block text-sm leading-5 text-muted-foreground">
+                Stripe attempts payment automatically for each billing period.
+              </span>
             </label>
           </div>
         </section>
       </div>
-      <p className="mt-5 text-sm leading-6 text-muted-foreground">Saving creates a draft only. You will explicitly activate it in the configured Stripe environment from the next screen.</p>
+      <p className="mt-5 text-sm leading-6 text-muted-foreground">
+        Saving creates a draft only. You will explicitly activate it in the
+        configured Stripe environment from the next screen.
+      </p>
     </MutationForm>
   );
 }
@@ -319,7 +415,11 @@ export function DiscardDraft({
     >
       <input type="hidden" name="revision" value={revision} />
       <label className="flex items-start gap-2 text-sm leading-6 text-foreground">
-        <input className="mt-1 size-4 rounded border-input accent-primary" type="checkbox" required />
+        <input
+          className="mt-1 size-4 rounded border-input accent-primary"
+          type="checkbox"
+          required
+        />
         Discard this unactivated draft and retain its history.
       </label>
     </MutationForm>

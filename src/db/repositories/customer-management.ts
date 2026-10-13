@@ -193,98 +193,104 @@ export function customerManagementRepository(db: Database) {
             eq(customerProviderCredentials.provider, "FLOWROUTE"),
           ),
         );
-      const [history, usage, runs, customerSubscriptions, invoices, adjustments] =
-        await Promise.all([
-          db
-            .select({
-              id: auditEvents.id,
-              action: auditEvents.action,
-              actorId: auditEvents.actorId,
-              createdAt: auditEvents.createdAt,
-              beforeJson: auditEvents.beforeJson,
-              afterJson: auditEvents.afterJson,
-            })
-            .from(auditEvents)
-            .where(
-              and(
-                eq(auditEvents.entityType, "customer"),
-                eq(auditEvents.entityId, id),
-              ),
-            )
-            .orderBy(desc(auditEvents.createdAt), desc(auditEvents.id))
-            .limit(21)
-            .offset(auditPage * 20),
-          db
-            .select({
-              id: usageSnapshots.id,
-              periodStart: usageSnapshots.periodStart,
-              periodEnd: usageSnapshots.periodEnd,
-              usageQuantity: usageSnapshots.usageQuantity,
-              providerCostMinor: usageSnapshots.providerCostMinor,
-              providerCostExact: usageSnapshots.providerCostExact,
-              currency: usageSnapshots.currency,
-              capturedAt: usageSnapshots.capturedAt,
-            })
-            .from(usageSnapshots)
-            .where(eq(usageSnapshots.customerId, id))
-            .orderBy(desc(usageSnapshots.periodEnd))
-            .limit(6),
-          db
-            .select({
-              id: billingRuns.id,
-              periodStart: billingRuns.periodStart,
-              periodEnd: billingRuns.periodEnd,
-              status: billingRuns.status,
-              subtotalMinor: billingRuns.subtotalMinor,
-              currency: billingRuns.currency,
-              stripeInvoiceId: billingRuns.stripeInvoiceId,
-            })
-            .from(billingRuns)
-            .where(eq(billingRuns.customerId, id))
-            .orderBy(desc(billingRuns.periodEnd))
-            .limit(6),
-          db
-            .select({
-              id: subscriptions.id,
-              status: subscriptions.status,
-              stripeSubscriptionId: subscriptions.stripeSubscriptionId,
-              collectionMethod: subscriptions.collectionMethod,
-              currentPeriodEnd: subscriptions.currentPeriodEnd,
-              cancelAtPeriodEnd: subscriptions.cancelAtPeriodEnd,
-            })
-            .from(subscriptions)
-            .where(eq(subscriptions.customerId, id))
-            .orderBy(desc(subscriptions.updatedAt))
-            .limit(3),
-          db
-            .select({
-              id: stripeInvoices.id,
-              status: stripeInvoices.status,
-              delinquent: stripeInvoices.delinquent,
-              autoAdvance: stripeInvoices.autoAdvance,
-              updatedAt: stripeInvoices.updatedAt,
-            })
-            .from(stripeInvoices)
-            .where(eq(stripeInvoices.customerId, id))
-            .orderBy(desc(stripeInvoices.updatedAt))
-            .limit(3),
-          db
-            .select({
-              id: customerBillingAdjustments.id,
-              code: customerBillingAdjustments.code,
-              amountMinor: customerBillingAdjustments.amountMinor,
-              quantity: customerBillingAdjustments.quantity,
-              validFrom: customerBillingAdjustments.validFrom,
-            })
-            .from(customerBillingAdjustments)
-            .where(
-              and(
-                eq(customerBillingAdjustments.customerId, id),
-                eq(customerBillingAdjustments.active, true),
-              ),
-            )
-            .orderBy(desc(customerBillingAdjustments.validFrom)),
-        ]);
+      const [
+        history,
+        usage,
+        runs,
+        customerSubscriptions,
+        invoices,
+        adjustments,
+      ] = await Promise.all([
+        db
+          .select({
+            id: auditEvents.id,
+            action: auditEvents.action,
+            actorId: auditEvents.actorId,
+            createdAt: auditEvents.createdAt,
+            beforeJson: auditEvents.beforeJson,
+            afterJson: auditEvents.afterJson,
+          })
+          .from(auditEvents)
+          .where(
+            and(
+              eq(auditEvents.entityType, "customer"),
+              eq(auditEvents.entityId, id),
+            ),
+          )
+          .orderBy(desc(auditEvents.createdAt), desc(auditEvents.id))
+          .limit(21)
+          .offset(auditPage * 20),
+        db
+          .select({
+            id: usageSnapshots.id,
+            periodStart: usageSnapshots.periodStart,
+            periodEnd: usageSnapshots.periodEnd,
+            usageQuantity: usageSnapshots.usageQuantity,
+            providerCostMinor: usageSnapshots.providerCostMinor,
+            providerCostExact: usageSnapshots.providerCostExact,
+            currency: usageSnapshots.currency,
+            capturedAt: usageSnapshots.capturedAt,
+          })
+          .from(usageSnapshots)
+          .where(eq(usageSnapshots.customerId, id))
+          .orderBy(desc(usageSnapshots.periodEnd))
+          .limit(6),
+        db
+          .select({
+            id: billingRuns.id,
+            periodStart: billingRuns.periodStart,
+            periodEnd: billingRuns.periodEnd,
+            status: billingRuns.status,
+            subtotalMinor: billingRuns.subtotalMinor,
+            currency: billingRuns.currency,
+            stripeInvoiceId: billingRuns.stripeInvoiceId,
+          })
+          .from(billingRuns)
+          .where(eq(billingRuns.customerId, id))
+          .orderBy(desc(billingRuns.periodEnd))
+          .limit(6),
+        db
+          .select({
+            id: subscriptions.id,
+            status: subscriptions.status,
+            stripeSubscriptionId: subscriptions.stripeSubscriptionId,
+            collectionMethod: subscriptions.collectionMethod,
+            currentPeriodEnd: subscriptions.currentPeriodEnd,
+            cancelAtPeriodEnd: subscriptions.cancelAtPeriodEnd,
+          })
+          .from(subscriptions)
+          .where(eq(subscriptions.customerId, id))
+          .orderBy(desc(subscriptions.updatedAt))
+          .limit(3),
+        db
+          .select({
+            id: stripeInvoices.id,
+            status: stripeInvoices.status,
+            delinquent: stripeInvoices.delinquent,
+            autoAdvance: stripeInvoices.autoAdvance,
+            updatedAt: stripeInvoices.updatedAt,
+          })
+          .from(stripeInvoices)
+          .where(eq(stripeInvoices.customerId, id))
+          .orderBy(desc(stripeInvoices.updatedAt))
+          .limit(3),
+        db
+          .select({
+            id: customerBillingAdjustments.id,
+            code: customerBillingAdjustments.code,
+            amountMinor: customerBillingAdjustments.amountMinor,
+            quantity: customerBillingAdjustments.quantity,
+            validFrom: customerBillingAdjustments.validFrom,
+          })
+          .from(customerBillingAdjustments)
+          .where(
+            and(
+              eq(customerBillingAdjustments.customerId, id),
+              eq(customerBillingAdjustments.active, true),
+            ),
+          )
+          .orderBy(desc(customerBillingAdjustments.validFrom)),
+      ]);
       return {
         customer,
         credentials: credentials ?? null,
@@ -378,7 +384,12 @@ export function customerManagementRepository(db: Database) {
           await tx
             .update(customerBillingAdjustments)
             .set({ active: false })
-            .where(inArray(customerBillingAdjustments.id, current.map((item) => item.id)));
+            .where(
+              inArray(
+                customerBillingAdjustments.id,
+                current.map((item) => item.id),
+              ),
+            );
         const effectiveFrom = new Date(`${input.effectiveFrom}T00:00:00.000Z`);
         const values: Array<{
           code: string;
@@ -396,7 +407,12 @@ export function customerManagementRepository(db: Database) {
           { code: "EXTRA_NUMBERS", quantity: String(input.extraNumbers) },
           ...(input.extraChannels === undefined
             ? []
-            : [{ code: "EXTRA_CHANNELS", quantity: String(input.extraChannels) }]),
+            : [
+                {
+                  code: "EXTRA_CHANNELS",
+                  quantity: String(input.extraChannels),
+                },
+              ]),
         ].filter((item) => {
           if (item.amountMinor !== undefined) return item.amountMinor > 0n;
           return Number(item.quantity ?? "0") > 0;
@@ -419,13 +435,20 @@ export function customerManagementRepository(db: Database) {
           .update(customers)
           .set({ updatedAt: sql`now()` })
           .where(eq(customers.id, id));
-        await audit(tx, actor, id, "customer.billing_adjustments_updated", undefined, {
-          effectiveFrom: input.effectiveFrom,
-          meteredSipTrunkUsage: input.meteredSipTrunkUsage,
-          cloudServerHosting: input.cloudServerHosting,
-          extraNumbers: input.extraNumbers,
-          extraChannels: input.extraChannels,
-        });
+        await audit(
+          tx,
+          actor,
+          id,
+          "customer.billing_adjustments_updated",
+          undefined,
+          {
+            effectiveFrom: input.effectiveFrom,
+            meteredSipTrunkUsage: input.meteredSipTrunkUsage,
+            cloudServerHosting: input.cloudServerHosting,
+            extraNumbers: input.extraNumbers,
+            extraChannels: input.extraChannels,
+          },
+        );
       });
     },
     async archive(id: string, revision: number, actor: AuditActor) {

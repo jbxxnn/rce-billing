@@ -13,17 +13,15 @@ try {
     { connectionString: process.env.DATABASE_URL },
     async (db) => {
       const provider = flowrouteProvider();
-      const result = await flowrouteExportService(
-        db,
-        provider,
-      ).process(exportId);
+      const result = await flowrouteExportService(db, provider).process(
+        exportId,
+      );
       if (result.status === "COMPLETED") {
         const jobs = await db
           .select({ id: backgroundJobs.id })
           .from(backgroundJobs)
           .where(eq(backgroundJobs.usageExportId, exportId));
-        for (const job of jobs)
-          await processFlowrouteJob(db, provider, job.id);
+        for (const job of jobs) await processFlowrouteJob(db, provider, job.id);
       }
       console.log(`${result.id}: ${result.status}`);
     },

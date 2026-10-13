@@ -98,7 +98,9 @@
   --shadow-2xl: 0 0 0 0 hsl(0 0 0 / 0%);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 body {
   min-width: 320px;
   margin: 0;
@@ -108,7 +110,9 @@ body {
   letter-spacing: var(--tracking-normal);
 }
 
-a { text-underline-offset: 3px; }
+a {
+  text-underline-offset: 3px;
+}
 
 .dark {
   --background: oklch(0.2529 0.0415 279.0076);

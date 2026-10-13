@@ -49,24 +49,24 @@ const adjustmentAmount = z
   .string()
   .trim()
   .max(21)
-  .refine(
-    (value) => {
-      try {
-        parseUsd(value);
-        return true;
-      } catch {
-        return false;
-      }
-    },
-    "Enter a non-negative USD amount with up to two decimals",
-  );
+  .refine((value) => {
+    try {
+      parseUsd(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }, "Enter a non-negative USD amount with up to two decimals");
 export const billingAdjustmentsSchema = z
   .object({
     revision: revisionSchema,
     effectiveFrom: z
       .string()
       .regex(/^\d{4}-\d{2}-\d{2}$/, "Choose a valid effective date")
-      .refine((value) => !Number.isNaN(new Date(`${value}T00:00:00.000Z`).getTime()), "Choose a valid effective date"),
+      .refine(
+        (value) => !Number.isNaN(new Date(`${value}T00:00:00.000Z`).getTime()),
+        "Choose a valid effective date",
+      ),
     meteredSipTrunkUsage: adjustmentAmount,
     cloudServerHosting: adjustmentAmount,
     extraNumbers: z.coerce.number().int().min(0).max(2147483647),

@@ -42,7 +42,14 @@ export async function PricePicker({
         )
       ) : (
         <p className="rounded-lg border border-dashed border-input px-5 py-8 text-sm text-muted-foreground">
-          No active plans are available. <Link className="font-medium text-primary hover:underline" href="/plans/new">Create a plan</Link> to continue.
+          No active plans are available.{" "}
+          <Link
+            className="font-medium text-primary hover:underline"
+            href="/plans/new"
+          >
+            Create a plan
+          </Link>{" "}
+          to continue.
         </p>
       )}
     </>

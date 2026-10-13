@@ -78,12 +78,8 @@
           "name": "app_sessions_app_user_id_app_users_id_fk",
           "tableFrom": "app_sessions",
           "tableTo": "app_users",
-          "columnsFrom": [
-            "app_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["app_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -93,9 +89,7 @@
         "app_sessions_token_hash_unique": {
           "name": "app_sessions_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -515,12 +509,8 @@
           "name": "background_jobs_usage_export_id_usage_exports_id_fk",
           "tableFrom": "background_jobs",
           "tableTo": "usage_exports",
-          "columnsFrom": [
-            "usage_export_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["usage_export_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -530,9 +520,7 @@
         "background_jobs_usage_export_key": {
           "name": "background_jobs_usage_export_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "usage_export_id"
-          ]
+          "columns": ["usage_export_id"]
         }
       },
       "policies": {},
@@ -621,12 +609,8 @@
           "name": "billing_line_items_billing_run_id_billing_runs_id_fk",
           "tableFrom": "billing_line_items",
           "tableTo": "billing_runs",
-          "columnsFrom": [
-            "billing_run_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["billing_run_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -636,17 +620,12 @@
         "billing_line_items_stripe_invoice_item_id_unique": {
           "name": "billing_line_items_stripe_invoice_item_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_invoice_item_id"
-          ]
+          "columns": ["stripe_invoice_item_id"]
         },
         "billing_line_items_code_key": {
           "name": "billing_line_items_code_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "billing_run_id",
-            "code"
-          ]
+          "columns": ["billing_run_id", "code"]
         }
       },
       "policies": {},
@@ -738,12 +717,8 @@
           "name": "billing_run_adjustments_billing_run_id_billing_runs_id_fk",
           "tableFrom": "billing_run_adjustments",
           "tableTo": "billing_runs",
-          "columnsFrom": [
-            "billing_run_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["billing_run_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -751,12 +726,8 @@
           "name": "billing_run_adjustments_created_by_app_user_id_app_users_id_fk",
           "tableFrom": "billing_run_adjustments",
           "tableTo": "app_users",
-          "columnsFrom": [
-            "created_by_app_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by_app_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -969,12 +940,8 @@
           "name": "billing_runs_customer_id_customers_id_fk",
           "tableFrom": "billing_runs",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -982,12 +949,8 @@
           "name": "billing_runs_plan_price_version_id_plan_price_versions_id_fk",
           "tableFrom": "billing_runs",
           "tableTo": "plan_price_versions",
-          "columnsFrom": [
-            "plan_price_version_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["plan_price_version_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -995,14 +958,8 @@
           "name": "billing_runs_subscription_fk",
           "tableFrom": "billing_runs",
           "tableTo": "subscriptions",
-          "columnsFrom": [
-            "subscription_id",
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id",
-            "customer_id"
-          ],
+          "columnsFrom": ["subscription_id", "customer_id"],
+          "columnsTo": ["id", "customer_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1016,12 +973,7 @@
             "period_start",
             "period_end"
           ],
-          "columnsTo": [
-            "id",
-            "customer_id",
-            "period_start",
-            "period_end"
-          ],
+          "columnsTo": ["id", "customer_id", "period_start", "period_end"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1031,18 +983,12 @@
         "billing_runs_stripe_invoice_id_unique": {
           "name": "billing_runs_stripe_invoice_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_invoice_id"
-          ]
+          "columns": ["stripe_invoice_id"]
         },
         "billing_runs_customer_period_key": {
           "name": "billing_runs_customer_period_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "customer_id",
-            "period_start",
-            "period_end"
-          ]
+          "columns": ["customer_id", "period_start", "period_end"]
         }
       },
       "policies": {},
@@ -1176,12 +1122,8 @@
           "name": "billing_sync_jobs_billing_run_id_billing_runs_id_fk",
           "tableFrom": "billing_sync_jobs",
           "tableTo": "billing_runs",
-          "columnsFrom": [
-            "billing_run_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["billing_run_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1191,9 +1133,7 @@
         "billing_sync_jobs_run_key": {
           "name": "billing_sync_jobs_run_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "billing_run_id"
-          ]
+          "columns": ["billing_run_id"]
         }
       },
       "policies": {},
@@ -1329,12 +1269,8 @@
           "name": "customer_billing_adjustments_customer_id_customers_id_fk",
           "tableFrom": "customer_billing_adjustments",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1342,12 +1278,8 @@
           "name": "customer_billing_adjustments_created_by_app_user_id_app_users_id_fk",
           "tableFrom": "customer_billing_adjustments",
           "tableTo": "app_users",
-          "columnsFrom": [
-            "created_by_app_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by_app_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1451,12 +1383,8 @@
           "name": "customer_provider_credentials_customer_id_customers_id_fk",
           "tableFrom": "customer_provider_credentials",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1466,10 +1394,7 @@
         "credentials_customer_provider_key": {
           "name": "credentials_customer_provider_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "customer_id",
-            "provider"
-          ]
+          "columns": ["customer_id", "provider"]
         }
       },
       "policies": {},
@@ -1683,16 +1608,12 @@
         "customers_legacy_id_unique": {
           "name": "customers_legacy_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "legacy_id"
-          ]
+          "columns": ["legacy_id"]
         },
         "customers_stripe_customer_id_unique": {
           "name": "customers_stripe_customer_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_customer_id"
-          ]
+          "columns": ["stripe_customer_id"]
         }
       },
       "policies": {},
@@ -1836,12 +1757,8 @@
           "name": "mcp_authorization_codes_app_user_id_app_users_id_fk",
           "tableFrom": "mcp_authorization_codes",
           "tableTo": "app_users",
-          "columnsFrom": [
-            "app_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["app_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1851,9 +1768,7 @@
         "mcp_authorization_codes_code_hash_unique": {
           "name": "mcp_authorization_codes_code_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "code_hash"
-          ]
+          "columns": ["code_hash"]
         }
       },
       "policies": {},
@@ -1953,12 +1868,8 @@
           "name": "plan_price_versions_plan_id_plans_id_fk",
           "tableFrom": "plan_price_versions",
           "tableTo": "plans",
-          "columnsFrom": [
-            "plan_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["plan_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1968,17 +1879,12 @@
         "plan_price_versions_stripe_price_id_unique": {
           "name": "plan_price_versions_stripe_price_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_price_id"
-          ]
+          "columns": ["stripe_price_id"]
         },
         "plan_price_versions_version_key": {
           "name": "plan_price_versions_version_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "plan_id",
-            "version"
-          ]
+          "columns": ["plan_id", "version"]
         }
       },
       "policies": {},
@@ -2123,9 +2029,7 @@
         "plans_legacy_id_unique": {
           "name": "plans_legacy_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "legacy_id"
-          ]
+          "columns": ["legacy_id"]
         }
       },
       "policies": {},
@@ -2176,9 +2080,7 @@
         "stripe_connection_account_id_unique": {
           "name": "stripe_connection_account_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "account_id"
-          ]
+          "columns": ["account_id"]
         }
       },
       "policies": {},
@@ -2282,9 +2184,7 @@
         "stripe_events_stripe_event_id_unique": {
           "name": "stripe_events_stripe_event_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_event_id"
-          ]
+          "columns": ["stripe_event_id"]
         }
       },
       "policies": {},
@@ -2430,12 +2330,8 @@
           "name": "stripe_invoice_history_customer_id_customers_id_fk",
           "tableFrom": "stripe_invoice_history",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -2531,12 +2427,8 @@
           "name": "stripe_invoices_customer_id_customers_id_fk",
           "tableFrom": "stripe_invoices",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -2544,12 +2436,8 @@
           "name": "stripe_invoices_subscription_id_subscriptions_id_fk",
           "tableFrom": "stripe_invoices",
           "tableTo": "subscriptions",
-          "columnsFrom": [
-            "subscription_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["subscription_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -2641,9 +2529,7 @@
         "stripe_requests_operation_key_unique": {
           "name": "stripe_requests_operation_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "operation_key"
-          ]
+          "columns": ["operation_key"]
         }
       },
       "policies": {},
@@ -2757,12 +2643,8 @@
           "name": "stripe_workflows_subscription_id_subscriptions_id_fk",
           "tableFrom": "stripe_workflows",
           "tableTo": "subscriptions",
-          "columnsFrom": [
-            "subscription_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["subscription_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -2772,9 +2654,7 @@
         "stripe_workflows_request_key_unique": {
           "name": "stripe_workflows_request_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "request_key"
-          ]
+          "columns": ["request_key"]
         }
       },
       "policies": {},
@@ -2997,12 +2877,8 @@
           "name": "subscriptions_customer_id_customers_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -3010,12 +2886,8 @@
           "name": "subscriptions_plan_price_version_id_plan_price_versions_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "plan_price_versions",
-          "columnsFrom": [
-            "plan_price_version_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["plan_price_version_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -3025,45 +2897,32 @@
         "subscriptions_creation_key_unique": {
           "name": "subscriptions_creation_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "creation_key"
-          ]
+          "columns": ["creation_key"]
         },
         "subscriptions_legacy_id_unique": {
           "name": "subscriptions_legacy_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "legacy_id"
-          ]
+          "columns": ["legacy_id"]
         },
         "subscriptions_stripe_subscription_id_unique": {
           "name": "subscriptions_stripe_subscription_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_subscription_id"
-          ]
+          "columns": ["stripe_subscription_id"]
         },
         "subscriptions_stripe_schedule_id_unique": {
           "name": "subscriptions_stripe_schedule_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_schedule_id"
-          ]
+          "columns": ["stripe_schedule_id"]
         },
         "subscriptions_stripe_subscription_item_id_unique": {
           "name": "subscriptions_stripe_subscription_item_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_subscription_item_id"
-          ]
+          "columns": ["stripe_subscription_item_id"]
         },
         "subscriptions_id_customer_key": {
           "name": "subscriptions_id_customer_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "id",
-            "customer_id"
-          ]
+          "columns": ["id", "customer_id"]
         }
       },
       "policies": {},
@@ -3229,12 +3088,8 @@
           "name": "usage_exports_customer_id_customers_id_fk",
           "tableFrom": "usage_exports",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -3244,12 +3099,7 @@
         "usage_exports_period_key": {
           "name": "usage_exports_period_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "customer_id",
-            "provider",
-            "period_start",
-            "period_end"
-          ]
+          "columns": ["customer_id", "provider", "period_start", "period_end"]
         },
         "usage_exports_identity_key": {
           "name": "usage_exports_identity_key",
@@ -3395,12 +3245,8 @@
           "name": "usage_snapshots_customer_id_customers_id_fk",
           "tableFrom": "usage_snapshots",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -3431,22 +3277,12 @@
         "usage_snapshots_period_key": {
           "name": "usage_snapshots_period_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "customer_id",
-            "provider",
-            "period_start",
-            "period_end"
-          ]
+          "columns": ["customer_id", "provider", "period_start", "period_end"]
         },
         "usage_snapshots_identity_key": {
           "name": "usage_snapshots_identity_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "id",
-            "customer_id",
-            "period_start",
-            "period_end"
-          ]
+          "columns": ["id", "customer_id", "period_start", "period_end"]
         }
       },
       "policies": {},
@@ -3475,20 +3311,12 @@
     "public.account_payment_status": {
       "name": "account_payment_status",
       "schema": "public",
-      "values": [
-        "CURRENT",
-        "PAST_DUE"
-      ]
+      "values": ["CURRENT", "PAST_DUE"]
     },
     "public.background_job_status": {
       "name": "background_job_status",
       "schema": "public",
-      "values": [
-        "PENDING",
-        "ENQUEUED",
-        "COMPLETED",
-        "NEEDS_REVIEW"
-      ]
+      "values": ["PENDING", "ENQUEUED", "COMPLETED", "NEEDS_REVIEW"]
     },
     "public.billing_run_status": {
       "name": "billing_run_status",
@@ -3511,22 +3339,12 @@
     "public.customer_status": {
       "name": "customer_status",
       "schema": "public",
-      "values": [
-        "DRAFT",
-        "ACTIVE",
-        "SUSPENDED",
-        "ARCHIVED"
-      ]
+      "values": ["DRAFT", "ACTIVE", "SUSPENDED", "ARCHIVED"]
     },
     "public.plan_type": {
       "name": "plan_type",
       "schema": "public",
-      "values": [
-        "FIXED",
-        "METERED",
-        "UNMETERED",
-        "OTHER"
-      ]
+      "values": ["FIXED", "METERED", "UNMETERED", "OTHER"]
     },
     "public.processing_status": {
       "name": "processing_status",
@@ -3542,11 +3360,7 @@
     "public.billing_trigger_type": {
       "name": "billing_trigger_type",
       "schema": "public",
-      "values": [
-        "SCHEDULED",
-        "MANUAL",
-        "REPLAY"
-      ]
+      "values": ["SCHEDULED", "MANUAL", "REPLAY"]
     },
     "public.usage_export_status": {
       "name": "usage_export_status",

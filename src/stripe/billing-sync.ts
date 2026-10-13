@@ -148,12 +148,24 @@ export async function syncBillingRun(
         ),
       );
   }
-  await stripeRequest(db, provider, `invoice-release:${invoice.id}`, "release", {
-    id: invoice.id,
-  });
-  await stripeRequest(db, provider, `invoice-finalize:${invoice.id}`, "finalize", {
-    id: invoice.id,
-  });
+  await stripeRequest(
+    db,
+    provider,
+    `invoice-release:${invoice.id}`,
+    "release",
+    {
+      id: invoice.id,
+    },
+  );
+  await stripeRequest(
+    db,
+    provider,
+    `invoice-finalize:${invoice.id}`,
+    "finalize",
+    {
+      id: invoice.id,
+    },
+  );
   if (prepared.subscription.collectionMethod === "send_invoice")
     await stripeRequest(db, provider, `invoice-send:${invoice.id}`, "send", {
       id: invoice.id,

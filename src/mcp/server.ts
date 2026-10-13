@@ -392,7 +392,13 @@ export function createRceBillingMcpServer(
       },
     },
     async (input) => {
-      const { confirmation, requestId, customerId, planPriceVersionId, collectionMethod } = input;
+      const {
+        confirmation,
+        requestId,
+        customerId,
+        planPriceVersionId,
+        collectionMethod,
+      } = input;
       void confirmation;
       try {
         const subscription = await read((db) =>

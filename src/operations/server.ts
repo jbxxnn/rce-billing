@@ -106,9 +106,15 @@ export async function operationalBillingRun(id: string) {
       })
       .from(billingRuns)
       .leftJoin(customers, eq(customers.id, billingRuns.customerId))
-      .leftJoin(planPriceVersions, eq(planPriceVersions.id, billingRuns.planPriceVersionId))
+      .leftJoin(
+        planPriceVersions,
+        eq(planPriceVersions.id, billingRuns.planPriceVersionId),
+      )
       .leftJoin(plans, eq(plans.id, planPriceVersions.planId))
-      .leftJoin(usageSnapshots, eq(usageSnapshots.id, billingRuns.usageSnapshotId))
+      .leftJoin(
+        usageSnapshots,
+        eq(usageSnapshots.id, billingRuns.usageSnapshotId),
+      )
       .where(eq(billingRuns.id, id));
     if (!run) return null;
     const lines = await db

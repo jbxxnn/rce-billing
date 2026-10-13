@@ -509,7 +509,13 @@ export function stripeService(db: Database, provider: StripeProvider) {
             ? { id: providerId, cancel_at_period_end: true }
             : {
                 id: providerId,
-                items: [{ id: current.itemId, price: priceId, quantity: itemQuantity }],
+                items: [
+                  {
+                    id: current.itemId,
+                    price: priceId,
+                    quantity: itemQuantity,
+                  },
+                ],
                 collection_method: input.collectionMethod,
                 ...(input.collectionMethod === "send_invoice" &&
                 input.daysUntilDue
@@ -656,7 +662,10 @@ export function stripeService(db: Database, provider: StripeProvider) {
             eq(stripeWorkflows.leaseToken, token),
           ),
         );
-      if (error instanceof StripeWorkflowError || error instanceof CustomerError)
+      if (
+        error instanceof StripeWorkflowError ||
+        error instanceof CustomerError
+      )
         throw error;
       throw new StripeWorkflowError(
         "RETRY",

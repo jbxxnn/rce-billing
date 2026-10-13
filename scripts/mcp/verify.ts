@@ -3,7 +3,12 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 const transport = new StdioClientTransport({
   command: process.execPath,
-  args: ["--conditions=react-server", "--import", "tsx", "scripts/mcp/start.ts"],
+  args: [
+    "--conditions=react-server",
+    "--import",
+    "tsx",
+    "scripts/mcp/start.ts",
+  ],
   cwd: process.cwd(),
   env: Object.fromEntries(
     Object.entries(process.env).filter(
@@ -12,7 +17,10 @@ const transport = new StdioClientTransport({
   ),
   stderr: "inherit",
 });
-const client = new Client({ name: "rce-billing-mcp-verifier", version: "0.1.0" });
+const client = new Client({
+  name: "rce-billing-mcp-verifier",
+  version: "0.1.0",
+});
 
 try {
   await client.connect(transport);

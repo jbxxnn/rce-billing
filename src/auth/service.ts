@@ -58,9 +58,8 @@ export class AuthenticationService {
   ): Promise<string | null> {
     const normalized = email.trim().toLowerCase();
     if (!normalized || normalized.length > 254) return null;
-    const userId = await this.repository.authorizeGoogleWorkspaceIdentity(
-      normalized,
-    );
+    const userId =
+      await this.repository.authorizeGoogleWorkspaceIdentity(normalized);
     const token = newSessionToken();
     const created = await this.repository.createGoogleSession(
       userId,

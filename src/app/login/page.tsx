@@ -34,7 +34,9 @@ export default async function Login({
               <p className="text-base font-semibold tracking-tight text-foreground">
                 RCE Billing
               </p>
-              <p className="text-xs text-muted-foreground">Operations workspace</p>
+              <p className="text-xs text-muted-foreground">
+                Operations workspace
+              </p>
             </div>
           </div>
 
@@ -70,7 +72,11 @@ export default async function Login({
                 <LockKeyhole className="size-4" aria-hidden="true" />
               </div>
               <p className="text-sm leading-6 text-muted-foreground">
-                Use your authorized <span className="font-medium text-foreground">re-circuit.com</span> Google Workspace account.
+                Use your authorized{" "}
+                <span className="font-medium text-foreground">
+                  re-circuit.com
+                </span>{" "}
+                Google Workspace account.
               </p>
             </div>
 
@@ -79,7 +85,12 @@ export default async function Login({
                 className="mt-5 inline-flex h-11 w-full items-center justify-center gap-3 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 href="/api/auth/google"
               >
-                <span className="flex size-5 items-center justify-center rounded-full bg-white font-semibold text-[11px] text-[#4285F4]" aria-hidden="true">G</span>
+                <span
+                  className="flex size-5 items-center justify-center rounded-full bg-white font-semibold text-[11px] text-[#4285F4]"
+                  aria-hidden="true"
+                >
+                  G
+                </span>
                 Continue with Google
                 <ArrowRight className="size-4" aria-hidden="true" />
               </a>
@@ -91,7 +102,10 @@ export default async function Login({
           </section>
 
           <p className="mt-5 flex items-center gap-2 text-xs leading-5 text-muted-foreground">
-            <ShieldCheck className="size-4 shrink-0 text-primary" aria-hidden="true" />
+            <ShieldCheck
+              className="size-4 shrink-0 text-primary"
+              aria-hidden="true"
+            />
             Access is limited to active billing administrators.
           </p>
         </div>
@@ -106,24 +120,31 @@ export default async function Login({
             RCE LLC · Billing administration
           </div>
           <div className="my-auto">
-            <p className="text-sm font-medium text-primary">One operating picture</p>
+            <p className="text-sm font-medium text-primary">
+              One operating picture
+            </p>
             <h2 className="mt-4 text-4xl font-semibold leading-tight tracking-tight">
               The information you need to bill with confidence.
             </h2>
             <p className="mt-5 max-w-sm text-base leading-7 text-secondary-foreground/70">
-              Keep customer records, Flowroute usage, Stripe activity, and billing reviews connected.
+              Keep customer records, Flowroute usage, Stripe activity, and
+              billing reviews connected.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
               <ReceiptText className="size-5 text-primary" aria-hidden="true" />
               <p className="mt-5 text-sm font-semibold">Billing review</p>
-              <p className="mt-1 text-sm leading-5 text-secondary-foreground/65">Review usage before Stripe invoices are finalized.</p>
+              <p className="mt-1 text-sm leading-5 text-secondary-foreground/65">
+                Review usage before Stripe invoices are finalized.
+              </p>
             </div>
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
               <BadgeCheck className="size-5 text-primary" aria-hidden="true" />
               <p className="mt-5 text-sm font-semibold">Controlled access</p>
-              <p className="mt-1 text-sm leading-5 text-secondary-foreground/65">Google Workspace authentication keeps the workspace private.</p>
+              <p className="mt-1 text-sm leading-5 text-secondary-foreground/65">
+                Google Workspace authentication keeps the workspace private.
+              </p>
             </div>
           </div>
         </div>

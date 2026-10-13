@@ -40,23 +40,27 @@ try {
       "Usage: request-export [--comparison] <customer-email> <period-start> <period-end>",
     );
   usagePeriod(periodStart, periodEnd, comparison);
-  await withDatabase({ connectionString: process.env.DATABASE_URL }, async (db) => {
-    const [customer] = await db
-      .select({ id: customers.id })
-      .from(customers)
-      .where(sql`lower(${customers.email}) = lower(${email.trim()})`)
-      .limit(1);
-    if (!customer) throw new Error("Customer was not found");
-    const usageExport = await createUsageRepository(db).ensureExport({
-      customerId: customer.id,
-      periodStart,
-      periodEnd,
-    });
-    const result = await flowrouteExportService(db, flowrouteProvider()).process(
-      usageExport.id,
-    );
-    console.log(`${result.id}: ${result.status}`);
-  });
+  await withDatabase(
+    { connectionString: process.env.DATABASE_URL },
+    async (db) => {
+      const [customer] = await db
+        .select({ id: customers.id })
+        .from(customers)
+        .where(sql`lower(${customers.email}) = lower(${email.trim()})`)
+        .limit(1);
+      if (!customer) throw new Error("Customer was not found");
+      const usageExport = await createUsageRepository(db).ensureExport({
+        customerId: customer.id,
+        periodStart,
+        periodEnd,
+      });
+      const result = await flowrouteExportService(
+        db,
+        flowrouteProvider(),
+      ).process(usageExport.id);
+      console.log(`${result.id}: ${result.status}`);
+    },
+  );
 } catch {
   console.error(
     "Flowroute export request did not complete. Inspect the usage-export status; no credentials or provider response were logged.",

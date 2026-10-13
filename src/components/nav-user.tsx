@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   IconCreditCard,
@@ -6,15 +6,11 @@ import {
   IconLogout,
   IconNotification,
   IconUserCircle,
-} from "@tabler/icons-react"
-import Link from "next/link"
-import { useState } from "react"
+} from "@tabler/icons-react";
+import Link from "next/link";
+import { useState } from "react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,42 +19,42 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
-  const [isSigningOut, setIsSigningOut] = useState(false)
+  const { isMobile } = useSidebar();
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   async function signOut() {
-    if (isSigningOut) return
-    setIsSigningOut(true)
+    if (isSigningOut) return;
+    setIsSigningOut(true);
 
     try {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
         credentials: "same-origin",
-      })
+      });
 
-      if (!response.ok) throw new Error("Sign-out failed")
+      if (!response.ok) throw new Error("Sign-out failed");
 
-      window.location.assign(response.url)
+      window.location.assign(response.url);
     } catch {
-      setIsSigningOut(false)
-      window.alert("Sign-out is temporarily unavailable. Please try again.")
+      setIsSigningOut(false);
+      window.alert("Sign-out is temporarily unavailable. Please try again.");
     }
   }
 
@@ -129,8 +125,8 @@ export function NavUser({
             <DropdownMenuItem
               disabled={isSigningOut}
               onSelect={(event) => {
-                event.preventDefault()
-                void signOut()
+                event.preventDefault();
+                void signOut();
               }}
             >
               <IconLogout />
@@ -140,5 +136,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }
