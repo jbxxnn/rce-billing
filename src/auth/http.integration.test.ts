@@ -8,6 +8,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "pg";
 import { migrateDatabase } from "../../scripts/db/migrate";
 import { manageAdministrator } from "../../scripts/auth/manage-admin";
+import { digest, newSessionToken } from "./crypto";
 
 const maintenanceUrl = process.env.TEST_DATABASE_URL;
 if (!maintenanceUrl)
@@ -85,6 +86,8 @@ describe.each(["next", "workers"] as const)(
               STRIPE_ACCOUNT_ID: "acct_fixture",
               STRIPE_WEBHOOK_SECRET: "whsec_httpfixture",
               APP_ORIGIN: origin,
+              GOOGLE_OAUTH_CLIENT_ID: "google-client-id",
+              GOOGLE_OAUTH_CLIENT_SECRET: "google-client-secret",
               FLOWROUTE_ENCRYPTION_KEY_VERSION: "test1",
               FLOWROUTE_ENCRYPTION_KEYS: fixtureKeys,
             },
@@ -120,6 +123,8 @@ describe.each(["next", "workers"] as const)(
           STRIPE_ACCOUNT_ID: "acct_fixture",
           STRIPE_WEBHOOK_SECRET: "whsec_httpfixture",
           APP_ORIGIN: origin,
+          GOOGLE_OAUTH_CLIENT_ID: "google-client-id",
+          GOOGLE_OAUTH_CLIENT_SECRET: "google-client-secret",
           DATABASE_URL: url.toString(),
           CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE:
             url.toString(),
@@ -169,7 +174,26 @@ describe.each(["next", "workers"] as const)(
         },
         body,
       });
-    it("redirects anonymous visitors and renders an accessible sign-in form", async () => {
+    const authenticatedCookie = async () => {
+      const token = newSessionToken();
+      const client = new Client({ connectionString: url.toString() });
+      try {
+        await client.connect();
+        const created = await client.query(
+          `INSERT INTO app_sessions(app_user_id, token_hash, expires_at)
+           SELECT id, $2, now() + interval '1 hour' FROM app_users
+           WHERE lower(email) = $1
+           RETURNING id`,
+          [email.toLowerCase(), await digest(token)],
+        );
+        if (!created.rowCount)
+          throw new Error("Test administrator was not created");
+      } finally {
+        await client.end();
+      }
+      return `rce-session=${token}`;
+    };
+    it("redirects anonymous visitors and starts Google Workspace sign-in", async () => {
       const response = await fetch(`${origin}/dashboard`, {
         redirect: "manual",
       });
@@ -177,10 +201,18 @@ describe.each(["next", "workers"] as const)(
       expect(response.headers.get("location")).toMatch(/\/login$/);
       const login = await fetch(`${origin}/login`);
       const html = await login.text();
-      expect(html).toContain('name="password"');
-      expect(html).toContain('type="password"');
-      expect(html).toContain('autoComplete="current-password"');
+      expect(html).toContain("Continue with Google");
+      expect(html).toContain('href="/api/auth/google"');
       expect(login.headers.get("x-frame-options")).toBe("DENY");
+      const google = await fetch(`${origin}/api/auth/google`, {
+        redirect: "manual",
+      });
+      expect(google.status).toBe(302);
+      expect(google.headers.get("location")).toMatch(
+        /^https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?/,
+      );
+      expect(google.headers.get("set-cookie")).toMatch(/httponly/i);
+      expect(google.headers.get("set-cookie")).toMatch(/samesite=lax/i);
     });
     it("rejects unsigned, tampered, expired, and live Stripe webhooks before provider calls", async () => {
       const sdk = stripeSdk("sk_test_fixture");
@@ -239,7 +271,7 @@ describe.each(["next", "workers"] as const)(
         ).status,
       ).toBe(401);
     });
-    it("rejects cross-origin and originless login and logout requests", async () => {
+    it("rejects cross-origin sign-out and keeps password sign-in disabled", async () => {
       expect(
         (
           await post(
@@ -249,7 +281,7 @@ describe.each(["next", "workers"] as const)(
             "https://evil.example",
           )
         ).status,
-      ).toBe(403);
+      ).toBe(404);
       expect(
         (
           await post(
@@ -265,27 +297,10 @@ describe.each(["next", "workers"] as const)(
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ email, password }),
       });
-      expect(missing.status).toBe(403);
+      expect(missing.status).toBe(404);
     });
-    it("signs in, protects cookie attributes and cached data, and invalidates logout", async () => {
-      const failed = await post(
-        "/api/auth/login",
-        new URLSearchParams({ email, password: "wrong-password" }),
-      );
-      expect(failed.status).toBe(303);
-      expect(failed.headers.get("set-cookie")).toBeNull();
-      const login = await post(
-        "/api/auth/login",
-        new URLSearchParams({ email, password }),
-      );
-      expect(login.status).toBe(303);
-      expect(login.headers.get("location")).toBe(`${origin}/dashboard`);
-      const header = login.headers.get("set-cookie")!;
-      expect(header).toMatch(/httponly/i);
-      expect(header).toMatch(/samesite=strict/i);
-      expect(header).toMatch(/path=\//i);
-      expect(header).not.toMatch(/domain=/i);
-      const cookie = header.split(";")[0];
+    it("protects session cookies, cached data, and sign-out", async () => {
+      const cookie = await authenticatedCookie();
       const dashboard = await fetch(`${origin}/dashboard`, {
         headers: { cookie },
       });
@@ -312,11 +327,7 @@ describe.each(["next", "workers"] as const)(
       expect(
         (await post("/api/customers", new URLSearchParams(profile))).status,
       ).toBe(401);
-      const login = await post(
-        "/api/auth/login",
-        new URLSearchParams({ email, password }),
-      );
-      const cookie = login.headers.get("set-cookie")!.split(";")[0];
+      const cookie = await authenticatedCookie();
       expect(
         (
           await post(
@@ -424,11 +435,7 @@ describe.each(["next", "workers"] as const)(
       expect((await post("/api/plans", new URLSearchParams(plan))).status).toBe(
         401,
       );
-      const login = await post(
-        "/api/auth/login",
-        new URLSearchParams({ email, password }),
-      );
-      const cookie = login.headers.get("set-cookie")!.split(";")[0];
+      const cookie = await authenticatedCookie();
       expect(
         (
           await post(
@@ -565,18 +572,9 @@ describe.each(["next", "workers"] as const)(
         await fixture.end();
       }
     });
-    it("rejects an existing cookie after an administrative password reset", async () => {
-      const login = await post(
-        "/api/auth/login",
-        new URLSearchParams({ email, password }),
-      );
-      const cookie = login.headers.get("set-cookie")!.split(";")[0];
-      await manageAdministrator(
-        url.toString(),
-        "reset",
-        email,
-        "new-http-test-password-only",
-      );
+    it("rejects an existing cookie after an administrator is disabled", async () => {
+      const cookie = await authenticatedCookie();
+      await manageAdministrator(url.toString(), "disable", email);
       expect(
         (
           await fetch(`${origin}/dashboard`, {
